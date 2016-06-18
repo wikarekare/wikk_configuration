@@ -3,6 +3,7 @@ require 'json'
 #Reads json configuration and provides access to the configuration data
 #as method calls.
 class Configuration
+  VERSION = '0.1.0'
   
   #Creates an instance of Configuration from a json file
   # @param [String] filename The Json file
@@ -41,24 +42,4 @@ class Configuration
     @pjson.to_s
   end
   
-  #Provides a self test of this class, by reading the test configuration file.
-  #  and attempting to access configuration items as methods. 
-  def self.test
-    config = Configuration.new('../conf/config_test.json')
-    $stderr.puts "base_directories is defined? #{config.respond_to?(:base_directory)}"
-    $stderr.puts "not_there is defined? #{config.respond_to?(:not_there)}"
-    $stderr.puts "base_directories is: '#{config.base_directory}'"
-    $stderr.puts "hello is of class: #{config.hello.class}"
-    $stderr.puts "config.hello[0] => #{config.hello[0]}"
-    $stderr.puts "world is of class: #{config.world.class}"
-    $stderr.puts "config.world['1'] => #{config.world['1']}"
-    $stderr.puts "boolean is of class: #{config.boolean.class}"
-    $stderr.puts "config.boolean => #{config.boolean}"
-    $stderr.puts "Dump the config file using to_s"
-    $stderr.puts config
-  end
 end
-
-#Self test
-#Configuration.test
-#Configuration.new('../conf/auth.json')

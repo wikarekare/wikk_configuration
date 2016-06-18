@@ -1,0 +1,7 @@
+History.txt
+Manifest.txt
+README.md
+Rakefile
+lib/wikk_configuration.rb
+test/manualtest.rb
+test/conf.json
