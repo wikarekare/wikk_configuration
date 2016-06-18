@@ -1,4 +1,4 @@
-# configuration
+# wikk_configuration
 
 * http://rbur004.github.com/configuration/
 * Source https://github.com/wikarekare/configuration
@@ -15,6 +15,27 @@ Ruby class to read json configuration files, and present the top level values as
 ## SYNOPSIS:
 
 	require 'configuration'
+  @config = Configuration.new(config_file) #Where config_file is a json file.
+    
+  eg. config_file with json types
+  {
+    "array": [ 0, 1, 2, 3 , 4 ],
+    "hash": { "0": 0, "1": 1, "2": 2 },
+    "boolean": true,
+    "string": "string",
+    "numeric": 1.2345
+  }
+  
+  Results in Ruby variables of classes:
+  
+  @config.array.class => Array
+  @config.hash.class => Hash
+  @config.boolean.class => TrueClass
+  @config.string.class => String
+  @config.numeric.class => Float
+  
+  Only top level hash names are converted to methods. 
+  Be careful not to use a hash key that would conflict with a local method in Class.
 	
 ## REQUIREMENTS:
 
