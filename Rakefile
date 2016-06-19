@@ -6,6 +6,7 @@ require 'hoe'
 Hoe.plugin :yard
 
 Hoe.spec 'wikk_configuration' do 
+  self.readme_file = "README.md"
   self.developer( "Rob Burrowes","r.burrowes@auckland.ac.nz")
   remote_rdoc_dir = '' # Release to root
   

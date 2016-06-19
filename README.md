@@ -15,6 +15,7 @@ Ruby class to read json configuration files, and present the top level values as
 ## SYNOPSIS:
 
 	require 'configuration'
+	include WIKK
   @config = Configuration.new(config_file) #Where config_file is a json file.
     
   eg. config_file with json types

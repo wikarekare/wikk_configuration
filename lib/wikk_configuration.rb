@@ -1,45 +1,47 @@
-require 'json'
+module WIKK
+  require 'json'
 
-#Reads json configuration and provides access to the configuration data
-#as method calls.
-class Configuration
-  VERSION = '0.1.0'
+  #Reads json configuration and provides access to the configuration data
+  #as method calls.
+  class Configuration
+    VERSION = '0.1.1'
   
-  #Creates an instance of Configuration from a json file
-  # @param [String] filename The Json file
-  # @return [Configuration]
-  def initialize(filename="#{File.dirname(__FILE__)}/../conf/config.json") 
-    json = File.read(filename)
-    @pjson = JSON.parse(json)
-  end
+    #Creates an instance of Configuration from a json file
+    # @param [String] filename The Json file
+    # @return [Configuration]
+    def initialize(filename="#{File.dirname(__FILE__)}/../conf/config.json") 
+      json = File.read(filename)
+      @pjson = JSON.parse(json)
+    end
   
-  #Provides a test for a method named after a json configuration item exists
-  # @note We need to define respond_to? as well as method_missing to satisfy tests in some libraries.
-  # @param symbol [Symbol,String]  The method name we need to test exists
-  # @param include_private [Boolean]  Extend the test to private methods
-  # @return [Boolean] true if the method exists
-  def respond_to?(symbol, include_private = false)
-    (@pjson[symbol.to_s] != nil) || super(symbol, include_private)
-  end
+    #Provides a test for a method named after a json configuration item exists
+    # @note We need to define respond_to? as well as method_missing to satisfy tests in some libraries.
+    # @param symbol [Symbol,String]  The method name we need to test exists
+    # @param include_private [Boolean]  Extend the test to private methods
+    # @return [Boolean] true if the method exists
+    def respond_to?(symbol, include_private = false)
+      (@pjson[symbol.to_s] != nil) || super(symbol, include_private)
+    end
 
-  #Default handler to map json configuration names to method names
-  # @note Be aware of the possibility of name conflicts between built in class methods an configuration items defined in the json file)
-  # @param symbol [symbol,String] The method name that maps to a json configuration item
-  # @param args [Array] Not used, but would hold arguments to the method call. Should be zero length for our methods.
-  # @param block [Block] Not used, but would be a code block supplied to the method. 
-  # @return [Object] the data associated with the json name, (hence method name) in the configuration file.
-  def method_missing(symbol , *args, &block)
-    s = symbol.to_s
-    if @pjson[s] != nil
-      return @pjson[s]
-    else
-      super
-    end     
-  end
+    #Default handler to map json configuration names to method names
+    # @note Be aware of the possibility of name conflicts between built in class methods an configuration items defined in the json file)
+    # @param symbol [symbol,String] The method name that maps to a json configuration item
+    # @param args [Array] Not used, but would hold arguments to the method call. Should be zero length for our methods.
+    # @param block [Block] Not used, but would be a code block supplied to the method. 
+    # @return [Object] the data associated with the json name, (hence method name) in the configuration file.
+    def method_missing(symbol , *args, &block)
+      s = symbol.to_s
+      if @pjson[s] != nil
+        return @pjson[s]
+      else
+        super
+      end     
+    end
   
-  # @return [String] the configuration
-  def to_s
-    @pjson.to_s
-  end
+    # @return [String] the configuration
+    def to_s
+      @pjson.to_s
+    end
   
+  end
 end

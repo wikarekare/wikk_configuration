@@ -1,7 +1,8 @@
 #!/usr/local/bin/ruby
-#require_relative '../lib/wikk_configuration.rb' #For preinstall testing
-require 'wikk_configuration.rb' #For post install testing
+require_relative '../lib/wikk_configuration.rb' #For preinstall testing
+#require 'wikk_configuration.rb' #For post install testing
 require 'pp'
+include WIKK
 
 #Provides a self test of this class, by reading the test configuration file.
 #  and attempting to access configuration items as methods. 
