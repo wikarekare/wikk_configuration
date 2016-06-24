@@ -3,15 +3,22 @@ module WIKK
 
   #Reads json configuration and provides access to the configuration data
   #as method calls.
+  #  @attr_accessor pjson [Hash] Raw hash created from reading the json file  
   class Configuration
-    VERSION = '0.1.1'
+    VERSION = '0.1.2'
   
+    attr_accessor :pjson
+    
     #Creates an instance of Configuration from a json file
-    # @param [String] filename The Json file
+    # @param [String|Hash] filename The Json file or a Ruby Hash, equivalent to the json
     # @return [Configuration]
     def initialize(filename="#{File.dirname(__FILE__)}/../conf/config.json") 
-      json = File.read(filename)
-      @pjson = JSON.parse(json)
+      if filename.class == Hash
+        @pjson = filename
+      else
+        json = File.read(filename)
+        @pjson = JSON.parse(json)
+      end
     end
   
     #Provides a test for a method named after a json configuration item exists
@@ -20,7 +27,7 @@ module WIKK
     # @param include_private [Boolean]  Extend the test to private methods
     # @return [Boolean] true if the method exists
     def respond_to?(symbol, include_private = false)
-      (@pjson[symbol.to_s] != nil) || super(symbol, include_private)
+      (@pjson[s = symbol.to_s] != nil) || (s[-1,1] == '=' && @pjson[s[0..-2]] != nil) || super(symbol, include_private)
     end
 
     #Default handler to map json configuration names to method names
@@ -33,6 +40,8 @@ module WIKK
       s = symbol.to_s
       if @pjson[s] != nil
         return @pjson[s]
+      elsif s[-1,1] == "="
+        @pjson[s[0..-2]] = args[0]
       else
         super
       end     

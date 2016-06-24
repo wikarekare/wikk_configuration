@@ -10,8 +10,13 @@ def test(config_file)
   puts "creating config from '#{config_file}'"
   config = Configuration.new(config_file)
   
+  puts "****** Dump config using to_s *********"
+  pp config
+  puts
+  puts
   puts "******Should be there*********"
   puts "base_directories is defined? #{config.respond_to?(:base_directory)}"
+  puts "base_directories= is defined? #{config.respond_to?(:base_directory=)}"
   puts "base_directories is: '#{config.base_directory}'"
   puts "******Should NOT be there*********"
   puts "not_there is defined? #{config.respond_to?(:not_there)}"
@@ -30,8 +35,32 @@ def test(config_file)
   puts "******Numeric*********"
   puts "numeric is of class: #{config.numeric.class}"
   puts "config.numeric => #{config.numeric}"
+  puts
+  puts "******Alter Numeric value and fetch again*********"
+  config.numeric = 1001
+  puts "config.numeric => #{config.numeric}"
+  puts config.pjson
+  puts
+  puts
+  puts
+  hash_source = { #Ruby equivalent of the json.
+    "base_directory" => "/usr/local/random",
+    "hello" => [ 0, 1, 2, 3 , 4 ],
+    "world" => { "0" => 0, "1" => 1, "2" => 2 },
+    "boolean" => true,
+    "string" => "string",
+    "numeric" => 1.2345,
+    "deep" => { "array" => [ 0, 1, 2, 3 , 4 ], "hash" => { "0" => 0, "1" => 1, "2" => 2 } },
+    "deeper" => { "hash" => { "array" => [ 0, 1, 2, 3 , 4 ] } }
+  }
+  puts "creating config from hash"
+  config_hash_source = Configuration.new(hash_source)
   puts "****** Dump config using to_s *********"
   pp config
+  puts "******Numeric from hashed source *********"
+  puts "numeric is of class: #{config_hash_source.numeric.class}"
+  puts "config_hash_source.numeric => #{config_hash_source.numeric}"
+  
 end
 
 puts "Start"
