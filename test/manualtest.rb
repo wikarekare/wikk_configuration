@@ -63,10 +63,31 @@ def test(config_file)
   
 end
 
+def test_save(config_file)
+  puts "test_save: creating config from '#{config_file}'"
+  config = Configuration.new(config_file)
+  config.save('conf_out')
+end
+
 puts "Start"
 begin
   test('conf.json')
 rescue Exception => error
+  puts "Error: error"
+end
+begin 
+  test_json = {
+    "base_directory": "/usr/local/random",
+    "hello": [ 0, 1, 2, 3 , 4 ],
+    "world": { "0": 0, "1": 1, "2": 2 },
+    "boolean": true,
+    "string": "string",
+    "numeric": 1.2345,
+    "deep": { "array": [ 0, 1, 2, 3 , 4 ], "hash": { "0": 0, "1": 1, "2": 2 } },
+    "deeper": { "hash": { "array": [ 0, 1, 2, 3 , 4 ] } }
+  }
+  test_save(test_json)
+rescue  Exception => error
   puts "Error: error"
 end
 puts "End"

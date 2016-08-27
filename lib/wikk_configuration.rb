@@ -1,21 +1,24 @@
 module WIKK
   require 'json'
+  require "wikk_json" #gem version
 
   #Reads json configuration and provides access to the configuration data
   #as method calls.
   #  @attr_accessor pjson [Hash] Raw hash created from reading the json file  
   class Configuration
-    VERSION = '0.1.2'
+    VERSION = '0.1.3'
   
     attr_accessor :pjson
     
     #Creates an instance of Configuration from a json file
     # @param [String|Hash] filename The Json file or a Ruby Hash, equivalent to the json
     # @return [Configuration]
-    def initialize(filename="#{File.dirname(__FILE__)}/../conf/config.json") 
+    def initialize(filename="#{File.dirname(__FILE__)}/../conf/config.json")
       if filename.class == Hash
+        @filename = nil
         @pjson = filename
       else
+        @filename = filename 
         json = File.read(filename)
         @pjson = JSON.parse(json)
       end
@@ -45,6 +48,17 @@ module WIKK
       else
         super
       end     
+    end
+    
+    #Write Json config file. Either over the original, or a new file.
+    # @param filename [String] overrides @filename, if creating a new file.
+    def save(filename = nil)
+      filename ||= @filename
+      if filename != nil
+        File.open(filename , "w+") do |fd|
+          fd.write(@pjson.to_j)
+        end
+      end
     end
   
     # @return [String] the configuration
