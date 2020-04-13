@@ -66,12 +66,12 @@ end
 def test_save(config_file)
   puts "test_save: creating config from '#{config_file}'"
   config = Configuration.new(config_file)
-  config.save('conf_out')
+  config.save(__dir__ + '/conf_out')
 end
 
 puts "Start"
 begin
-  test('conf.json')
+  test(__dir__ + '/conf.json')
 rescue Exception => error
   puts "Error: error"
 end
