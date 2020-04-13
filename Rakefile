@@ -12,6 +12,8 @@ Hoe.spec 'wikk_configuration' do
   
   self.yard_title = 'wikk_configuration'
   self.yard_options = ['--markup', 'markdown', '--protected']
+  
+  self.dependency "wikk_json", "~> 0.1.0"
 end
 
 
