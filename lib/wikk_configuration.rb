@@ -10,7 +10,8 @@ module WIKK
   
     attr_accessor :pjson
     
-    #Creates an instance of Configuration from a json file
+    # Creates an instance of Configuration from a json file
+    #
     # @param [String|Hash] filename The Json file or a Ruby Hash, equivalent to the json
     # @return [Configuration]
     def initialize(filename="#{File.dirname(__FILE__)}/../conf/config.json")
@@ -24,7 +25,8 @@ module WIKK
       end
     end
   
-    #Provides a test for a method named after a json configuration item exists
+    # Provides a test for a method named after a json configuration item exists
+    #
     # @note We need to define respond_to? as well as method_missing to satisfy tests in some libraries.
     # @param symbol [Symbol,String]  The method name we need to test exists
     # @param include_private [Boolean]  Extend the test to private methods
@@ -33,7 +35,8 @@ module WIKK
       (@pjson[s = symbol.to_s] != nil) || (s[-1,1] == '=' && @pjson[s[0..-2]] != nil) || super(symbol, include_private)
     end
 
-    #Default handler to map json configuration names to method names
+    # Default handler to map json configuration names to method names
+    #
     # @note Be aware of the possibility of name conflicts between built in class methods an configuration items defined in the json file)
     # @param symbol [symbol,String] The method name that maps to a json configuration item
     # @param args [Array] Not used, but would hold arguments to the method call. Should be zero length for our methods.
@@ -50,7 +53,8 @@ module WIKK
       end     
     end
     
-    #Write Json config file. Either over the original, or a new file.
+    # Write Json config file. Either over the original, or a new file.
+    #
     # @param filename [String] overrides @filename, if creating a new file.
     def save(filename = nil)
       filename ||= @filename
@@ -61,6 +65,8 @@ module WIKK
       end
     end
   
+    # Config to string
+    #
     # @return [String] the configuration
     def to_s
       @pjson.to_s
