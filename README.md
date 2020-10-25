@@ -1,8 +1,8 @@
 # wikk_configuration
 
-* http://rbur004.github.com/configuration/
-* Source https://github.com/wikarekare/configuration
-* Gem https://rubygems.org/gems/wikk_configuration
+* Docs :: https://wikarekare.github.io/wikk_configuration/
+* Source :: https://github.com/wikarekare/wikk_configuration
+* Gem :: https://rubygems.org/gems/wikk_configuration
 
 ## DESCRIPTION:
 

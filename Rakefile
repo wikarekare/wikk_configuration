@@ -1,6 +1,5 @@
 #!/usr/local/bin/ruby
 # -*- ruby -*-
-
 require 'rubygems'
 require 'hoe'
 Hoe.plugin :yard
