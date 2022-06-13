@@ -6,7 +6,7 @@ module WIKK
   # as method calls.
   #  @attr_accessor pjson [Hash] Raw hash created from reading the json file
   class Configuration
-    VERSION = '0.1.3'
+    VERSION = '0.1.4'
 
     attr_accessor :pjson
 
@@ -35,6 +35,11 @@ module WIKK
       (@pjson[s = symbol.to_s] != nil) || (s[-1, 1] == '=' && @pjson[s[0..-2]] != nil) || super(symbol, include_private)
     end
 
+    # Also need to respond to missing for calls we accept
+    def respond_to_missing?(symbol, *_args)
+      (@pjson[s = symbol.to_s] != nil) || (s[-1, 1] == '=' && @pjson[s[0..-2]] != nil) || super(symbol, include_private)
+    end
+
     # Default handler to map json configuration names to method names
     #
     # @note Be aware of the possibility of name conflicts between built in class methods an configuration items defined in the json file)
@@ -46,7 +51,7 @@ module WIKK
       s = symbol.to_s
       if @pjson[s] != nil
         return @pjson[s]
-      elsif s[-1, 1] == '='
+      elsif s[-1, 1] == '=' && @pjson[s[0..-2]]
         @pjson[s[0..-2]] = args[0]
       else
         super
